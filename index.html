@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Praha syysloma 2026 - majoitusvertailu</title>
+    <meta
+      name="description"
+      content="Kolmen Prahan majoituskohteen vertailu syyslomalle 2026: sijainti, hinnat, makuuhuoneet, varusteet, plussat, miinukset ja kartta."
+    />
+    <link rel="preconnect" href="https://unpkg.com" />
+    <link rel="preconnect" href="https://tile.openstreetmap.org" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIINfQXTX2WIa9d9ef9BmbN7P0R3TzU6R7s="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Praha syysloma alkuun">
+        <span class="brand-mark">P</span>
+        <span>Praha 2026</span>
+      </a>
+      <nav aria-label="Sivun osiot">
+        <a href="#vertailu">Vertailu</a>
+        <a href="#kohteet">Kohteet</a>
+        <a href="#kartta">Kartta</a>
+        <a href="#lahteet">Lähteet</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero section-pad">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <h1>Praha syysloma 2026</h1>
+            <p>
+              Tiivis päätöspaketti kolmesta majoituksesta isolle seurueelle:
+              missä ollaan, mitä saa rahalla ja mikä vaihtoehto tuntuu
+              käytännössä parhaalta.
+            </p>
+            <div class="hero-actions" aria-label="Päätoiminnot">
+              <a class="button primary" href="#kohteet">
+                <i data-lucide="home"></i>
+                Katso kohteet
+              </a>
+              <a class="button secondary" href="#kartta">
+                <i data-lucide="map"></i>
+                Avaa kartta
+              </a>
+            </div>
+          </div>
+
+          <aside class="notice-panel" aria-label="Tärkeä huomio">
+            <div class="notice-icon">
+              <i data-lucide="calendar-days"></i>
+            </div>
+            <div>
+              <h2>Vertailun iso varaus</h2>
+              <p>
+                Booking-linkit ovat ajalle 10.-17.10.2026. Airbnb-linkki on
+                ajalle 17.-24.10.2026, joten hinnat ja saatavuus pitää
+                vahvistaa ennen varaamista.
+              </p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="quick-picks section-pad compact" aria-labelledby="suositukset">
+        <div class="container">
+          <div class="section-heading">
+            <h2 id="suositukset">Nopea johtopäätös</h2>
+            <p>Valinta riippuu siitä, haluatteko eniten keskustaa, omaa tilaa vai tekemistä sisällä.</p>
+          </div>
+          <div class="recommendation-grid" id="recommendationCards"></div>
+        </div>
+      </section>
+
+      <section class="compare section-pad" id="vertailu" aria-labelledby="vertailu-title">
+        <div class="container">
+          <div class="section-heading split">
+            <div>
+              <h2 id="vertailu-title">Systemaattinen vertailu</h2>
+              <p>
+                Sama rakenne kaikille: sijainti, makuuhuoneet, hinta, varusteet,
+                hyvät puolet ja riskit.
+              </p>
+            </div>
+            <p class="updated">Päivitetty lähteiden pohjalta 12.7.2026</p>
+          </div>
+
+          <div class="score-grid" id="scoreCards"></div>
+
+          <div class="table-wrap" role="region" aria-label="Majoituskohteiden vertailutaulukko" tabindex="0">
+            <table>
+              <thead>
+                <tr>
+                  <th>Kohde</th>
+                  <th>Sijainti</th>
+                  <th>Makuuhuoneet</th>
+                  <th>Erikoisuudet</th>
+                  <th>Hinta / saatavuus</th>
+                  <th>Paras käyttö</th>
+                </tr>
+              </thead>
+              <tbody id="comparisonRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="details section-pad" id="kohteet" aria-labelledby="kohteet-title">
+        <div class="container">
+          <div class="section-heading">
+            <h2 id="kohteet-title">Kohteet kuvineen ja linkkeineen</h2>
+            <p>
+              Booking-kohteiden omat kuvat kannattaa avata alkuperäisistä
+              gallerioista; kuvapaneelit on merkitty, jos ne ovat havainnekuvia.
+            </p>
+          </div>
+          <div class="place-list" id="placeList"></div>
+        </div>
+      </section>
+
+      <section class="map-section section-pad" id="kartta" aria-labelledby="kartta-title">
+        <div class="container map-grid">
+          <div>
+            <div class="section-heading">
+              <h2 id="kartta-title">Kohteet kartalla</h2>
+              <p>
+                Merkit näyttävät kohteiden tai julkisesti arvioitujen sijaintien
+                paikat suhteessa Prahan keskustaan.
+              </p>
+            </div>
+            <div class="map-notes" id="mapNotes"></div>
+          </div>
+          <div class="map-shell">
+            <div id="map" aria-label="Kartta Prahan majoituksista"></div>
+            <noscript>Kartta vaatii JavaScriptin. Kohteiden osoitteet ovat listassa kartan vieressä.</noscript>
+          </div>
+        </div>
+      </section>
+
+      <section class="sources section-pad compact" id="lahteet" aria-labelledby="lahteet-title">
+        <div class="container">
+          <div class="section-heading">
+            <h2 id="lahteet-title">Lähteet ja tarkistuslista</h2>
+            <p>
+              Ennen lopullista varausta kannattaa tarkistaa samalle päivämäärälle
+              kokonaishinta, peruutusehdot, makuuhuonemäärä, lemmikit ja
+              turvallisuusvarusteet.
+            </p>
+          </div>
+          <div class="source-grid" id="sourceList"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>Praha syysloma 2026 - majoitusvertailu GitHub Pagesille.</p>
+        <a href="#top">Takaisin ylös</a>
+      </div>
+    </footer>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
