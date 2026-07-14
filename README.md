@@ -1,6 +1,6 @@
 # Praha syysloma 2026
 
-Staattinen GitHub Pages -sivu kolmen Prahan majoituskohteen vertailuun. Ilme on tehty alkuperäiseksi tsekkiläisestä käsintehdystä animaatiosta inspiroituneeksi paperi-, puu- ja kollaasityyliksi.
+Staattinen GitHub Pages -sivu kolmen Prahan majoituskohteen vertailuun. Ilme on tehty alkuperäiseksi tsekkoslovakkilaisesta sosialistisen realismin julistetaiteesta ja surrealistisista elokuvajulisteista inspiroituneeksi moderniksi verkkosivuksi.
 
 ## Julkaisu GitHub Pagesiin
 

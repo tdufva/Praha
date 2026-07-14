@@ -461,10 +461,14 @@ function initMap() {
     scrollWheelZoom: false,
   }).setView([50.0785, 14.4045], 13);
 
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  const tileLayer = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   }).addTo(map);
+
+  tileLayer.on("tileerror", () => {
+    mapEl.classList.add("map-load-warning");
+  });
 
   places.forEach((place) => {
     L.marker(place.coords)
@@ -486,14 +490,48 @@ function initMap() {
   landmarks.forEach(([name, coords]) => {
     L.circleMarker(coords, {
       radius: 6,
-      color: "#15503f",
-      fillColor: "#fff1df",
+      color: "#101014",
+      fillColor: "#f1c83d",
       fillOpacity: 1,
       weight: 2,
     })
       .addTo(map)
       .bindPopup(`<span class="popup-title">${escapeHtml(name)}</span>Nähtävyys`);
   });
+
+  const bounds = L.latLngBounds([
+    ...places.map((place) => place.coords),
+    ...landmarks.map(([, coords]) => coords),
+  ]);
+
+  function refreshMap() {
+    requestAnimationFrame(() => {
+      map.invalidateSize();
+      map.fitBounds(bounds, {
+        maxZoom: 13,
+        padding: [24, 24],
+      });
+    });
+  }
+
+  refreshMap();
+  window.addEventListener("load", refreshMap, { once: true });
+  window.addEventListener("resize", refreshMap);
+  setTimeout(refreshMap, 250);
+  setTimeout(refreshMap, 1000);
+
+  if (document.fonts?.ready) {
+    document.fonts.ready.then(refreshMap);
+  }
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        refreshMap();
+      }
+    });
+    observer.observe(mapEl);
+  }
 }
 
 function init() {
